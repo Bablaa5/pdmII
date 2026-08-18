@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.SeekBar;
 
 import androidx.activity.EdgeToEdge;
@@ -16,12 +18,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener, Runnable {
+public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener, Runnable, View.OnClickListener {
 
     private Toolbar toolbar;
     private MediaPlayer mediaPlayer;
     private SeekBar seekbar;
     private Handler handler;
+    private Button b;
+    private boolean flag;
+    private int musica;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -43,6 +48,11 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         seekbar = findViewById(R.id.seekBar);
         seekbar.setOnSeekBarChangeListener(this);
         handler =  new Handler();
+
+        b = findViewById(R.id.button2);
+        b.setOnClickListener(this);
+        flag = false;
+
 
 
     }
@@ -112,6 +122,21 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         if(mediaPlayer!= null){
             seekbar.setProgress(mediaPlayer.getCurrentPosition());
             handler.postDelayed(this,1000);
+        }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == b){
+            if(!flag){
+                musica = R.raw.forrodofarol_quincasmoreira;
+                flag = true;
+
+            } else{
+                musica = R.raw.josefina;
+                flag = false;
+            }
         }
 
     }
