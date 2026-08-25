@@ -10,13 +10,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletionListener, SeekBar.OnSeekBarChangeListener, Runnable, View.OnClickListener {
 
@@ -25,8 +29,10 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     private SeekBar seekbar;
     private Handler handler;
     private Button b;
-    private boolean flag;
-    private int musica;
+    private int musica,indiceLista;
+    private ArrayList<Playlist> lista;
+    private CardView card1, card2, card3, card4,card5;
+    private TextView textoMusicaSeleciona, textoMusicaTocando;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -49,9 +55,28 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         seekbar.setOnSeekBarChangeListener(this);
         handler =  new Handler();
 
-        b = findViewById(R.id.button2);
-        b.setOnClickListener(this);
-        flag = false;
+
+        musica = R.raw.josefina;
+
+        lista new ArrayList<>();
+        lista.add(new Playlist("Josefina", R.raw.josefina));
+        lista.add(new Playlist("Higer Water", R.raw.higher_water));
+        lista.add(new Playlist("Hard Red Heart", R.raw.hard_red_heart));
+        lista.add(new Playlist("Ancient History", R.raw.ancient_history));
+        lista.add(new Playlist("No one here gets in alive", R.raw.no_one_here_gets_in_alive));
+
+        card1 =  findViewById(R.id.card1);
+        card1.setOnClickListener(this);
+        card2 =  findViewById(R.id.card2);
+        card2.setOnClickListener(this);
+        card3 =  findViewById(R.id.card3);
+        card3.setOnClickListener(this);
+        card4 =  findViewById(R.id.card4);
+        card4.setOnClickListener(this);
+        card5 =  findViewById(R.id.card5);
+        card5.setOnClickListener(this);
+        textoMusicaSeleciona = findViewById(R.id.textView2);
+        textoMusicaTocando = findViewById(R.id.textView3);
 
 
 
@@ -63,7 +88,8 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         }
         if (id == R.id.id001){
             if(mediaPlayer== null){
-                mediaPlayer = MediaPlayer.create(this, R.raw.forrodofarol_quincasmoreira);
+                mediaPlayer = MediaPlayer.create(this, musica);
+                textoMusicaTocando.setText("Música tocando"+lista.get(indiceLista).getNome());
                 mediaPlayer.setOnCompletionListener(this);
                 seekbar.setMax(mediaPlayer.getDuration());
                 handler.post(this);
@@ -128,15 +154,35 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
 
     @Override
     public void onClick(View v) {
-        if(v == b){
-            if(!flag){
-                musica = R.raw.forrodofarol_quincasmoreira;
-                flag = true;
+        if(v == card1){
+            indiceLista = 0;
+            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            musica = lista.get(indiceLista).getMusica();
 
-            } else{
-                musica = R.raw.josefina;
-                flag = false;
-            }
+        }
+        if(v == card2){
+            indiceLista = 1;
+            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            musica = lista.get(indiceLista).getMusica();
+
+        }
+        if(v == card3){
+            indiceLista = 2;
+            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            musica = lista.get(indiceLista).getMusica();
+
+        }
+        if(v == card4){
+            indiceLista = 3;
+            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            musica = lista.get(indiceLista).getMusica();
+
+        }
+        if(v == card5){
+            indiceLista = 4;
+            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            musica = lista.get(indiceLista).getMusica();
+
         }
 
     }

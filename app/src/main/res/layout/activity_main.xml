@@ -19,6 +19,8 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="indo tela02" />
+        android:backgroundTint="#F2AFCA"
+        android:text="indo tela02"
+        android:textColorLink="#F2AFCA" />
 
 </LinearLayout>
