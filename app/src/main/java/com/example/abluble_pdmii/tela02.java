@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     private ArrayList<Playlist> lista;
     private CardView card1, card2, card3, card4,card5;
     private TextView textoMusicaSeleciona, textoMusicaTocando;
+    private ImageView imgPreview, imgNext;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,7 +60,7 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
 
         musica = R.raw.josefina;
 
-        lista new ArrayList<>();
+        lista = new ArrayList<Playlist>();
         lista.add(new Playlist("Josefina", R.raw.josefina));
         lista.add(new Playlist("Higer Water", R.raw.higher_water));
         lista.add(new Playlist("Hard Red Heart", R.raw.hard_red_heart));
@@ -78,6 +80,11 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
         textoMusicaSeleciona = findViewById(R.id.textView2);
         textoMusicaTocando = findViewById(R.id.textView3);
 
+        imgPreview = findViewById(R.id.imageView);
+        imgPreview.setOnClickListener(this);
+        imgNext = findViewById(R.id.imageView3);
+        imgNext.setOnClickListener(this);
+
 
 
     }
@@ -87,23 +94,10 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
             finish();
         }
         if (id == R.id.id001){
-            if(mediaPlayer== null){
-                mediaPlayer = MediaPlayer.create(this, musica);
-                textoMusicaTocando.setText("Música tocando"+lista.get(indiceLista).getNome());
-                mediaPlayer.setOnCompletionListener(this);
-                seekbar.setMax(mediaPlayer.getDuration());
-                handler.post(this);
-                mediaPlayer.start();
-            }else if(!mediaPlayer.isPlaying()){
-                mediaPlayer.start();
-            }
+            play();
         }
         if(id == R.id.id003){
-            if(mediaPlayer != null){
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
+            stop();
         }
         if(id == R.id.id002){
             if(mediaPlayer != null && mediaPlayer.isPlaying()){
@@ -120,9 +114,15 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        mediaPlayer.release();
+        handler.removeCallbacks(this);
+        mp.release();
         mediaPlayer = null;
         seekbar.setProgress(0);
+        indiceLista++;
+        if(indiceLista >= lista.size()){
+            indiceLista = 0;
+        }
+        textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
     }
 
     @Override
@@ -156,34 +156,80 @@ public class tela02 extends AppCompatActivity implements MediaPlayer.OnCompletio
     public void onClick(View v) {
         if(v == card1){
             indiceLista = 0;
-            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
 
         }
         if(v == card2){
             indiceLista = 1;
-            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
 
         }
         if(v == card3){
             indiceLista = 2;
-            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
 
         }
         if(v == card4){
             indiceLista = 3;
-            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
 
         }
         if(v == card5){
             indiceLista = 4;
-            textoMusicaSeleciona.setText("Música selecionada"+lista.get(indiceLista).getNome());
+            textoMusicaSeleciona.setText("Música selecionada: "+lista.get(indiceLista).getNome());
             musica = lista.get(indiceLista).getMusica();
 
         }
 
+        if(v == imgPreview){
+            indiceLista--;
+            if(indiceLista < 0){
+                indiceLista = lista.size()-1;
+            }
+            textoMusicaSeleciona.setText("Música selencionada: "+lista.get(indiceLista).getNome());
+            stop();
+            play();
+
+        }
+        if(v == imgNext){
+            indiceLista++;
+            if(indiceLista >= lista.size()){
+                indiceLista = 0;
+            }
+            textoMusicaSeleciona.setText("Música selencionada: "+lista.get(indiceLista).getNome());
+            stop();
+            play();
+
+        }
+
     }
+    public void play(){
+        if(mediaPlayer== null){
+            mediaPlayer = MediaPlayer.create(this, lista.get(indiceLista).getMusica());
+            textoMusicaTocando.setText("Música tocando: "+lista.get(indiceLista).getNome());
+            mediaPlayer.setOnCompletionListener(this);
+            seekbar.setMax(mediaPlayer.getDuration());
+            handler.post(this);
+            mediaPlayer.start();
+        }else if(!mediaPlayer.isPlaying()){
+            mediaPlayer.start();
+            handler.post(this);
+
+        }
+    }
+
+    public void stop(){
+        if(mediaPlayer != null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
 }
+
+
