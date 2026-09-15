@@ -28,20 +28,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="TextView" />
+            android:gravity="center"
+            android:text="00:00" />
 
         <SeekBar
             android:id="@+id/seekBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="0.8" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:text="TextView" />
+            android:gravity="center"
+            android:text="00:00" />
 
     </LinearLayout>
 
