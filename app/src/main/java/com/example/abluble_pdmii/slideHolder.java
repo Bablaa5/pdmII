@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class slideHolder extends RecyclerView.ViewHolder {
-    public TextView titulo;
+    public TextView titulo, texto;
     public ImageView imagem;
 
 
