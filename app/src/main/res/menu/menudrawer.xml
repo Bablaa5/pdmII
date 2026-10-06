@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/idhome"
+        android:icon="@drawable/home_24px"
+        android:title="home" />
+    <item
+        android:id="@+id/idtela02"
+        android:icon="@drawable/music_note_24px"
+        android:title="musica" />
+    <item
+        android:id="@+id/idtela03"
+        android:icon="@drawable/slideshow_24px"
+        android:title="slides" />
+</menu>
