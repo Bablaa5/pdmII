@@ -2,16 +2,23 @@ package com.example.abluble_pdmii;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
@@ -20,17 +27,51 @@ public class tela03 extends AppCompatActivity implements View.OnClickListener, R
     private ArrayList<slide> lista, texto;
     private Button sair;
     private TextView textinho;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    private ActionBarDrawerToggle toggle;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela03);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.iddrawer), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.linear3), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        toolbar = findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        drawerLayout = findViewById(R.id.iddrawer3);
+        navigationView = findViewById(R.id.nv3);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.idhome){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(tela03.this, TelaHome.class));
+                    return true;
+                }
+                if(menuItem.getItemId() == R.id.idtela02){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(tela03.this,tela02.class));
+                    return true;
+                }
+                if(menuItem.getItemId() == R.id.idtela03){
+                    drawerLayout.closeDrawers();
+                    return true;
+                }
+                return false;
+            }
+        };
+
         viewPager = findViewById(R.id.viewpager);
         textinho = findViewById(R.id.textView5);
 
@@ -64,8 +105,6 @@ public class tela03 extends AppCompatActivity implements View.OnClickListener, R
 
         viewPager.setAdapter(adapter);
 
-        sair = findViewById(R.id.button);
-        sair.setOnClickListener(this);
 
 
     }
