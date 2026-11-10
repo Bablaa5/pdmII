@@ -68,9 +68,19 @@ public class tela03 extends AppCompatActivity implements View.OnClickListener, R
                     drawerLayout.closeDrawers();
                     return true;
                 }
+                if(menuItem.getItemId() == R.id.idtela04){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(tela03.this,tela04.class));
+                    return true;
+                }
+                if(menuItem.getItemId() == R.id.idsobre){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(tela03.this,SobreActivity.class));
+                    return true;
+                }
                 return false;
             }
-        };
+        });
 
         viewPager = findViewById(R.id.viewpager);
         textinho = findViewById(R.id.textView5);

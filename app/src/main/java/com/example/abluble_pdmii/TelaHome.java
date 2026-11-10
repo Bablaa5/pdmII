@@ -63,6 +63,16 @@ public class TelaHome extends AppCompatActivity {
                     startActivity(new Intent(TelaHome.this,tela03.class));
                     return true;
                 }
+                if(menuItem.getItemId() == R.id.idtela03){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(TelaHome.this,tela04.class));
+                    return true;
+                }
+                if(menuItem.getItemId() == R.id.idtela03){
+                    drawerLayout.closeDrawers();
+                    startActivity(new Intent(TelaHome.this,SobreActivity.class));
+                    return true;
+                }
                 return false;
             }
         });
